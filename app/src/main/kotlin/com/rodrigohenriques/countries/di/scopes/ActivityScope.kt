@@ -1,4 +1,4 @@
-package com.project.di.scopes
+package com.rodrigohenriques.countries.di.scopes
 
 import javax.inject.Scope
 

@@ -1,7 +1,7 @@
-package com.project
+package com.rodrigohenriques.countries
 
-import com.project.di.components.ApplicationComponent
-import com.project.di.components.DaggerApplicationComponent
+import com.rodrigohenriques.countries.di.components.ApplicationComponent
+import com.rodrigohenriques.countries.di.components.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 

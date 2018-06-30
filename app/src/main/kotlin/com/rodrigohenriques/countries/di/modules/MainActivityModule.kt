@@ -1,4 +1,4 @@
-package com.project.di.modules
+package com.rodrigohenriques.countries.di.modules
 
 import dagger.Module
 

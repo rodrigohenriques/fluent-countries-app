@@ -1,7 +1,7 @@
-package com.project.di.modules
+package com.rodrigohenriques.countries.di.modules
 
-import com.project.di.scopes.ActivityScope
-import com.project.feature.main.MainActivity
+import com.rodrigohenriques.countries.di.scopes.ActivityScope
+import com.rodrigohenriques.countries.feature.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

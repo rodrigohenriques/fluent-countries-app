@@ -1,9 +1,9 @@
-package com.project.di.components
+package com.rodrigohenriques.countries.di.components
 
 import android.app.Application
-import com.project.di.modules.ActivityBuilderModule
-import com.project.di.modules.ApplicationModule
-import com.project.CustomApplication
+import com.rodrigohenriques.countries.di.modules.ActivityBuilderModule
+import com.rodrigohenriques.countries.di.modules.ApplicationModule
+import com.rodrigohenriques.countries.CustomApplication
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector

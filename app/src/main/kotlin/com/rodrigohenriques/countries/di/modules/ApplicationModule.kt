@@ -1,4 +1,4 @@
-package com.project.di.modules
+package com.rodrigohenriques.countries.di.modules
 
 import android.app.Application
 import android.content.Context

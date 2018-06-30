@@ -1,8 +1,8 @@
-package com.project.feature.main
+package com.rodrigohenriques.countries.feature.main
 
 import android.content.Context
 import android.os.Bundle
-import com.project.R
+import com.rodrigohenriques.countries.R
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
