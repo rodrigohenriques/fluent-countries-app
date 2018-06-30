@@ -4,6 +4,8 @@ import android.app.Application
 import com.rodrigohenriques.countries.di.modules.ActivityBuilderModule
 import com.rodrigohenriques.countries.di.modules.ApplicationModule
 import com.rodrigohenriques.countries.CustomApplication
+import com.rodrigohenriques.countries.di.modules.ApiModule
+import com.rodrigohenriques.countries.di.modules.RepositoryModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -15,7 +17,9 @@ import javax.inject.Singleton
     modules = [
       AndroidSupportInjectionModule::class,
       ApplicationModule::class,
-      ActivityBuilderModule::class
+      ActivityBuilderModule::class,
+      ApiModule::class,
+      RepositoryModule::class
     ]
 )
 interface ApplicationComponent : AndroidInjector<CustomApplication> {
