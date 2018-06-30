@@ -1,3 +1,4 @@
 <resources>
-  <string name="app_name">android-bootstrap</string>
+  <string name="app_name">Countries App</string>
+  <string name="title_countries">Countries</string>
 </resources>

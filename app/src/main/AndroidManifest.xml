@@ -10,7 +10,8 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     android:name=".CustomApplication">
-    <activity android:name=".feature.countries.CountriesActivity">
+    <activity android:name=".feature.countries.CountriesActivity"
+      android:label="@string/title_countries">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 

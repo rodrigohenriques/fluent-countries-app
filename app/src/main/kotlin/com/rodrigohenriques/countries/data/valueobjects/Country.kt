@@ -11,9 +11,9 @@ data class Country(
     val region: String,
     val subregion: String,
     val population: String,
-    private val latlng: List<Int>,
+    private val latlng: List<Double>,
     val demonym: String,
-    val area: Long,
+    val area: Double,
     val gini: Double,
     val timezones: List<String>,
     val borders: List<String>,
@@ -23,5 +23,7 @@ data class Country(
     val languages: List<Language>,
     val translations: Map<String, String>,
     val regionalBlocs: List<RegionalBlock>
-)
+) {
+  fun location(): Pair<Double, Double> = latlng[0] to latlng[1]
+}
 

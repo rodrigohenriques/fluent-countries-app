@@ -11,8 +11,7 @@ class RemoteCountryRepository
     private val countriesApi: CountriesApi,
     private val backgroundScheduler: Scheduler
 ) : CountryRepository {
-  private val cacheableGetAllRepositories = countriesApi.getAll().cache()
-
   override fun getCountries(): Single<List<Country>> =
-      cacheableGetAllRepositories.subscribeOn(backgroundScheduler)
+      countriesApi.getAll()
+          .subscribeOn(backgroundScheduler)
 }

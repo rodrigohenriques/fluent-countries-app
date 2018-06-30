@@ -1,9 +1,11 @@
 package com.rodrigohenriques.countries.di.modules
 
+import android.content.Context
 import com.rodrigohenriques.countries.BuildConfig
 import com.rodrigohenriques.countries.data.api.CountriesApi
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,9 +15,14 @@ import javax.inject.Singleton
 
 @Module
 class ApiModule {
+
   @Provides
-  @Singleton
-  fun provideOkHttpClient(): OkHttpClient {
+  fun provideCache(context: Context): Cache {
+    return Cache(context.cacheDir, 10 * 1024 * 1024)
+  }
+
+  @Provides
+  fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
 
     httpLoggingInterceptor.level = when {
@@ -23,7 +30,17 @@ class ApiModule {
       else -> HttpLoggingInterceptor.Level.NONE
     }
 
+    return httpLoggingInterceptor
+  }
+
+  @Provides
+  @Singleton
+  fun provideOkHttpClient(
+      cache: Cache,
+      httpLoggingInterceptor: HttpLoggingInterceptor
+  ): OkHttpClient {
     return OkHttpClient.Builder()
+        .cache(cache) // 10 MB
         .addInterceptor(httpLoggingInterceptor)
         .build()
   }

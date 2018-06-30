@@ -1,13 +1,20 @@
 package com.rodrigohenriques.countries.feature.countries
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import com.rodrigohenriques.countries.util.ErrorWithMessage
 import com.rodrigohenriques.countries.R
+import com.rodrigohenriques.countries.data.valueobjects.Country
+import com.rodrigohenriques.countries.util.hide
+import com.rodrigohenriques.countries.util.show
 import dagger.android.support.DaggerAppCompatActivity
 import io.fluent.Hub
+import io.fluent.StateType
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import kotlinx.android.synthetic.main.activity_countries.*
 import javax.inject.Inject
 
 class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
@@ -21,7 +28,7 @@ class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
+    setContentView(R.layout.activity_countries)
     hub.connect(this)
   }
 
@@ -47,6 +54,32 @@ class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
   }
 
   override fun bind(newState: CountriesState) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    when (newState.type) {
+      StateType.Loading -> showLoading()
+      StateType.Success -> {
+        hideLoading()
+        showCountries(newState.countryList)
+      }
+      is ErrorWithMessage -> {
+        hideLoading()
+        showError(newState.type.message)
+      }
+    }
+  }
+
+  private fun showCountries(countryList: List<Country>) {
+
+  }
+
+  private fun showError(message: String) {
+    Snackbar.make(recyclerViewCountries, message, Snackbar.LENGTH_LONG).show()
+  }
+
+  private fun showLoading() {
+    progressBar.show()
+  }
+
+  private fun hideLoading() {
+    progressBar.hide()
   }
 }
