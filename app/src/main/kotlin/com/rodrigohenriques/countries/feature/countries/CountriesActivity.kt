@@ -53,6 +53,8 @@ class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
     hub.disconnect()
   }
 
+  override fun countryClicks(): Observable<Country> = countriesRecyclerView.itemClicks()
+
   override fun bind(newState: CountriesState) {
     when (newState.type) {
       StateType.Loading -> showLoading()
@@ -68,11 +70,11 @@ class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
   }
 
   private fun showCountries(countryList: List<Country>) {
-
+    countriesRecyclerView.bind(countryList)
   }
 
   private fun showError(message: String) {
-    Snackbar.make(recyclerViewCountries, message, Snackbar.LENGTH_LONG).show()
+    Snackbar.make(countriesRecyclerView, message, Snackbar.LENGTH_LONG).show()
   }
 
   private fun showLoading() {

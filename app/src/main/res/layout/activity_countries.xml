@@ -6,8 +6,8 @@
   android:layout_height="match_parent"
   tools:context=".feature.countries.CountriesActivity">
 
-  <android.support.v7.widget.RecyclerView
-    android:id="@+id/recyclerViewCountries"
+  <com.rodrigohenriques.countries.feature.countries.CountriesRecyclerView
+    android:id="@+id/countriesRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_constraintBottom_toBottomOf="parent"

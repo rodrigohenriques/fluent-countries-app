@@ -25,5 +25,7 @@ data class Country(
     val regionalBlocs: List<RegionalBlock>
 ) {
   fun location(): Pair<Double, Double> = latlng[0] to latlng[1]
+
+  fun flagUrl() = "http://www.geonames.org/flags/x/$alpha2Code.gif".toLowerCase()
 }
 
