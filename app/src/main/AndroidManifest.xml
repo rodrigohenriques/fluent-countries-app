@@ -10,7 +10,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     android:name=".CustomApplication">
-    <activity android:name=".feature.main.MainActivity">
+    <activity android:name=".feature.countries.CountriesActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
