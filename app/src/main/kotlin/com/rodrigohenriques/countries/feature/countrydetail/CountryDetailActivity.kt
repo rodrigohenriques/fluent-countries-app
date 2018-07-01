@@ -24,6 +24,10 @@ class CountryDetailActivity : AppCompatActivity() {
 
     collapsingToolbarLayout.title = country.name
 
+    bind(country)
+  }
+
+  private fun bind(country: Country) {
     textViewCapital.text = country.capital
     textViewLanguages.text = country.languages.joinToString(", ") {
       it.name + if (it.name != it.nativeName) " (${it.nativeName})" else ""
@@ -34,6 +38,8 @@ class CountryDetailActivity : AppCompatActivity() {
 
     val formatter = DecimalFormat("#,###,###")
     textViewPopulation.text = formatter.format(country.population.toInt())
+
+    textViewCurrencies.text = country.currencies.joinToString(", ") { "${it.name} (${it.symbol})" }
   }
 
   companion object {
