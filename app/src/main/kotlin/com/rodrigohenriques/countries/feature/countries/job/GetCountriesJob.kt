@@ -31,5 +31,6 @@ class GetCountriesJob
           }
         }
         .ignoreElement()
+        .onErrorComplete()
   }
 }
