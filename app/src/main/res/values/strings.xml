@@ -7,4 +7,6 @@
   <string name="label_sub_region">Sub Region:</string>
   <string name="label_population">Population:</string>
   <string name="label_currencies">Currencies:</string>
+  <string name="search_title">Search countries</string>
+  <string name="search_hint">Ex: Brasil</string>
 </resources>

@@ -16,18 +16,16 @@ class GetCountriesJob
 ) : RxJob<Unit>() {
   override fun bind(input: Unit): Completable {
     return countryRepository.getCountries()
-        .doOnSubscribe { store.update { copy(type = StateType.Loading) } }
+        .doOnSubscribe { store.update { setStateType(StateType.Loading) } }
         .doOnSuccess { countries ->
           store.update {
-            copy(
-                type = StateType.Success,
-                countryList = countries
-            )
+            setStateType(StateType.Success)
+                .setCountries(countries)
           }
         }
         .doOnError {
           store.update {
-            copy(type = ErrorWithMessage("Can't get new countries"))
+            setStateType(ErrorWithMessage("Can't get new countries"))
           }
         }
         .ignoreElement()

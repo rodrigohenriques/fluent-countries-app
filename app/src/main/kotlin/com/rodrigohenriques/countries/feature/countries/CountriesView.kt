@@ -7,4 +7,5 @@ import io.reactivex.Observable
 interface CountriesView : View<CountriesState> {
 
   fun countryClicks(): Observable<Country>
+  fun searchQueryUpdates(): Observable<CharSequence>
 }

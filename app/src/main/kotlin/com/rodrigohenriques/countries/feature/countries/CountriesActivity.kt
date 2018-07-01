@@ -2,6 +2,7 @@ package com.rodrigohenriques.countries.feature.countries
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.view.Menu
 import com.rodrigohenriques.countries.util.ErrorWithMessage
 import com.rodrigohenriques.countries.R
 import com.rodrigohenriques.countries.data.valueobjects.Country
@@ -16,6 +17,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.activity_countries.*
 import javax.inject.Inject
+import android.support.v7.widget.SearchView
+import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView
+import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
+
 
 class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
 
@@ -24,6 +30,8 @@ class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
   @Inject
   lateinit var stateChanges: Observable<CountriesState>
 
+  private var searchQueryUpdates = PublishSubject.create<CharSequence>()
+
   private val disposables = CompositeDisposable()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +39,6 @@ class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
     setContentView(R.layout.activity_countries)
     setSupportActionBar(toolbar)
     hub.connect(this)
-  }
-
-  override fun onResume() {
-    super.onResume()
 
     stateChanges
         .observeOn(AndroidSchedulers.mainThread())
@@ -44,24 +48,35 @@ class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
         .addTo(disposables)
   }
 
-  override fun onPause() {
-    super.onPause()
-    disposables.clear()
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    val inflater = menuInflater
+    inflater.inflate(R.menu.menu_countries, menu)
+    val searchView = menu.findItem(R.id.option_search).actionView as SearchView
+
+    RxSearchView.queryTextChanges(searchView)
+        .doOnSubscribe { it.addTo(disposables) }
+        .subscribe(searchQueryUpdates)
+
+    return true
   }
 
   override fun onDestroy() {
     super.onDestroy()
+    disposables.clear()
     hub.disconnect()
   }
 
   override fun countryClicks(): Observable<Country> = countriesRecyclerView.itemClicks()
+
+  override fun searchQueryUpdates(): Observable<CharSequence> =
+      searchQueryUpdates.debounce(300, TimeUnit.MILLISECONDS)
 
   override fun bind(newState: CountriesState) {
     when (newState.type) {
       StateType.Loading -> showLoading()
       StateType.Success -> {
         hideLoading()
-        showCountries(newState.countryList)
+        showCountries(newState.queriedList ?: newState.countryList)
       }
       is ErrorWithMessage -> {
         hideLoading()
