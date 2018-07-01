@@ -27,6 +27,10 @@ data class Language(
     return 0
   }
 
+  override fun toString(): String {
+    return if (name != nativeName) "$name ($nativeName)" else name
+  }
+
   companion object CREATOR : Parcelable.Creator<Language> {
     override fun createFromParcel(parcel: Parcel): Language {
       return Language(parcel)

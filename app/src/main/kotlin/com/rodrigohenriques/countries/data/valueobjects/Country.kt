@@ -2,6 +2,7 @@ package com.rodrigohenriques.countries.data.valueobjects
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.text.DecimalFormat
 
 data class Country(
     val name: String,
@@ -52,9 +53,8 @@ data class Country(
       parcel.createTypedArrayList(RegionalBlock)) {
   }
 
-  fun location(): Pair<Double, Double> = latlng[0] to latlng[1]
-
   fun flagUrl() = "http://www.geonames.org/flags/x/$alpha2Code.gif".toLowerCase()
+
   override fun writeToParcel(parcel: Parcel, flags: Int) {
     parcel.writeString(name)
     parcel.writeStringList(topLevelDomain)
@@ -81,6 +81,19 @@ data class Country(
 
   override fun describeContents(): Int {
     return 0
+  }
+
+  fun languagesAsString(): CharSequence? {
+    return languages.joinToString(", ")
+  }
+
+  fun currenciesAsString(): CharSequence? {
+    return currencies.joinToString(", ")
+  }
+
+  fun formattedPopulation(): CharSequence? {
+    val formatter = DecimalFormat("#,###,###")
+    return formatter.format(population.toLong())
   }
 
   companion object CREATOR : Parcelable.Creator<Country> {

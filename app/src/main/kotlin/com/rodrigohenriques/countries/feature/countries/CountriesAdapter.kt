@@ -1,5 +1,6 @@
 package com.rodrigohenriques.countries.feature.countries
 
+import android.graphics.Bitmap
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -8,8 +9,9 @@ import android.view.ViewGroup
 import com.rodrigohenriques.countries.R
 import com.rodrigohenriques.countries.data.valueobjects.Country
 import com.rodrigohenriques.countries.util.gone
-import com.rodrigohenriques.countries.util.load
 import com.rodrigohenriques.countries.util.show
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_country.view.*
@@ -27,8 +29,8 @@ class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.Holder>() {
   }
 
   override fun onBindViewHolder(holder: Holder, position: Int) {
-    val suggestion = data[position]
-    holder.bind(suggestion)
+    val country = data[position]
+    holder.bind(country)
   }
 
   override fun getItemCount(): Int = data.size
@@ -46,9 +48,14 @@ class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.Holder>() {
 
   inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(country: Country) {
-      itemView.imageViewFlag.load(country.flagUrl()) {
-        placeholder(R.drawable.ic_image)
-      }
+      Picasso.get().cancelRequest(itemView.imageViewFlag)
+
+      Picasso.get().load(country.flagUrl())
+          .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+          .config(Bitmap.Config.RGB_565)
+          .fit()
+          .into(itemView.imageViewFlag)
+
       itemView.textViewName.text = country.name
 
       if (country.name != country.nativeName) {

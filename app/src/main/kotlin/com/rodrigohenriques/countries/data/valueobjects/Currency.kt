@@ -26,6 +26,10 @@ data class Currency(
     return 0
   }
 
+  override fun toString(): String {
+    return "$name ($symbol)"
+  }
+
   companion object CREATOR : Parcelable.Creator<Currency> {
     override fun createFromParcel(parcel: Parcel): Currency {
       return Currency(parcel)
