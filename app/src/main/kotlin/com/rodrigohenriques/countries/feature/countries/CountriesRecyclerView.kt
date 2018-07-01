@@ -1,8 +1,9 @@
 package com.rodrigohenriques.countries.feature.countries
 
 import android.content.Context
-import android.support.v7.widget.GridLayoutManager
+import android.content.res.Configuration
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.AttributeSet
 import com.rodrigohenriques.countries.data.valueobjects.Country
 import io.reactivex.Observable
@@ -16,7 +17,12 @@ class CountriesRecyclerView @JvmOverloads constructor(
   private val countriesAdapter = CountriesAdapter()
 
   init {
-    layoutManager = GridLayoutManager(context, 3)
+    val spanCount = when (resources.configuration.orientation) {
+      Configuration.ORIENTATION_LANDSCAPE -> 4
+      else -> 2
+    }
+
+    layoutManager = StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
     adapter = countriesAdapter
   }
 
