@@ -29,6 +29,7 @@ class CountriesActivity : DaggerAppCompatActivity(), CountriesView {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_countries)
+    setSupportActionBar(toolbar)
     hub.connect(this)
   }
 
