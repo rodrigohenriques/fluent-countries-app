@@ -13,15 +13,20 @@ class SearchCountryByNameJob
     private val backgroundScheduler: Scheduler
 ) : RxJob<String>() {
   override fun bind(input: String): Completable {
+    val query = input.trim()
+
+    if (query.isEmpty()) return Completable.complete()
+
     return Completable.fromAction {
       val state = store.state()
       val filteredList = state.countryList.filter { country ->
-        country.name.startsWith(input, ignoreCase = true) ||
-            country.nativeName.startsWith(input, ignoreCase = true)
+        country.name.startsWith(query, ignoreCase = true) ||
+            country.nativeName.startsWith(query, ignoreCase = true)
       }
 
       store.update {
-        setQuery(input).setFilteredCountries(filteredList)
+        setQuery(query)
+            .setFilteredCountries(filteredList)
       }
     }.subscribeOn(backgroundScheduler)
   }

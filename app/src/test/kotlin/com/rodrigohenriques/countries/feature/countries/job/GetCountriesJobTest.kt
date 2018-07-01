@@ -1,19 +1,15 @@
 package com.rodrigohenriques.countries.feature.countries.job
 
-import com.mooveit.library.Fakeit
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import com.rodrigohenriques.countries.data.FakeData
 import com.rodrigohenriques.countries.data.repository.CountryRepository
-import com.rodrigohenriques.countries.data.valueobjects.Country
 import com.rodrigohenriques.countries.feature.countries.CountriesState
 import com.rodrigohenriques.countries.util.ErrorWithMessage
 import io.fluent.StateType
 import io.fluent.rx.RxStore
 import io.reactivex.Single
-import org.hamcrest.CoreMatchers.`is`
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
