@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.rodrigohenriques.countries.R
 import com.rodrigohenriques.countries.data.valueobjects.Country
+import com.rodrigohenriques.countries.util.gone
 import com.rodrigohenriques.countries.util.load
+import com.rodrigohenriques.countries.util.show
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_country.view.*
@@ -44,8 +46,18 @@ class CountriesAdapter : RecyclerView.Adapter<CountriesAdapter.Holder>() {
 
   inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(country: Country) {
-      itemView.imageViewFlag.load(country.flagUrl())
+      itemView.imageViewFlag.load(country.flagUrl()) {
+        placeholder(R.drawable.ic_image)
+      }
       itemView.textViewName.text = country.name
+
+      if (country.name != country.nativeName) {
+        itemView.textViewNativeName.show()
+        itemView.textViewNativeName.text = "(${country.nativeName})"
+      } else {
+        itemView.textViewNativeName.gone()
+      }
+
       itemView.setOnClickListener { itemClicksSubject.onNext(country) }
     }
   }
